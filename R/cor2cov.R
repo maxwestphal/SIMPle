@@ -6,9 +6,9 @@
 #' @return The corresponding covariance matrix.
 #' @export
 #'
-#' @details Copied implementation from \code{psych::cor2cov}.
+#' @details Copied implementation from \code{psych::cor2cov}, adapted to work with length(sigma)==1
 cor2cov <- function(rho, sigma){
-  sigma <- diag(sigma)
+  sigma <- diag(sigma, nrow=length(sigma), ncol=length(sigma))
   cov <- sigma %*% rho %*% sigma
   colnames(cov) <- rownames(cov) <- colnames(rho)
   return(cov)

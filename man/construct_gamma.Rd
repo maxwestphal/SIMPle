@@ -2,13 +2,20 @@
 % Please edit documentation in R/construct_gamma.R
 \name{construct_gamma}
 \alias{construct_gamma}
-\title{Construct the gamma parameter for the multivariate Beta (mBeta) distribution.}
+\title{Construct the gamma parameter for the multivariate Beta (mbeta) distribution.}
 \usage{
-construct_gamma(dims = 3, nu, moments = NULL, tol = 0.01,
-  method = 1, ...)
+construct_gamma(
+  vars = 3,
+  nu,
+  moments,
+  corr = NULL,
+  tol = 0.01,
+  input = "moments",
+  ...
+)
 }
 \arguments{
-\item{dims}{\code{integer}, dimension of multivariate beta distribution.}
+\item{vars}{\code{integer}, dimension of multivariate beta distribution.}
 
 \item{nu}{\code{numeric}, equal to the sum of resulting gamma vector (prior observations).}
 
@@ -22,15 +29,10 @@ a warning is given. See details.}
 }
 \value{
 A numeric vector gamma of length 2^dims suitable as a parameter for
-the multivariate Beta (mBeta) distribution.
+the multivariate Beta (mbeta) distribution.
 }
 \description{
-Construct the gamma parameter for the multivariate Beta (mBeta) distribution.
-}
-\details{
-[+++TODO+++] Frechet bounds! incl REF
-CP VS MU/RHO SPEC
-SIMPle REF
+Construct the gamma parameter for the multivariate Beta (mbeta) distribution.
 }
 \examples{
 construct_gamma(3, 1)

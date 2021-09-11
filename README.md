@@ -1,14 +1,14 @@
 # SIMPle: Simultaneous Inference for Multiple Proportions (R package)
 
-This package allows to define a multivariate Beta distribution and construct multivariate credible regions by means of the multivariate Beta-Binomial model.
+This package implements a multivariate beta distribution and allows to construct multivariate credible regions.
 
 ## Description
 
-The package implements methods from the forthcoming publication
+The package implements methods from the publication
 
-*Westphal, Max (2019). “Simultaneous Inference for Multiple Proportions: A Multivariate Beta-Binomial Model”. In: Manuscript submitted for publication.*
+*Westphal, Max. "Simultaneous Inference for Multiple Proportions: A Multivariate Beta-Binomial Model." arXiv preprint arXiv:1911.00098 (2019).*
 
-Note that this is an **EARLY DEVELOPMENT VERSION**. A more detailed description will follow in the future.
+Note that this is a roughly tested **DEVELOPMENT VERSION**. 
 
 ## Installing
 

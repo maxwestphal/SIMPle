@@ -5,14 +5,14 @@ print.SIMPle.dist <- function(x){
 }
 
 #' @export
-print.SIMPle.dlist <- function(x){
-  cat("A list of SIMPle.dist objects:\n")
-  str(x, 1)
+print.SIMPle.sample <- function(x){
+  cat("A SIMPle.sample object:\n")
+  x <- lapply(x, head, n=10)
+  print.default(x)
 }
 
 #' @export
-print.SIMPle.loss <- function(x){
-  cat("A SIMPle.loss object:\n")
-  str(x, 1)
+print.SIMPle.result <- function(x){
+  cat("A SIMPle.result object:\n")
+  print.default(x)
 }
-

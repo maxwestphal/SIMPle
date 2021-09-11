@@ -2,24 +2,24 @@
 % Please edit documentation in R/visualize.R
 \name{visualize}
 \alias{visualize}
-\title{Visualize a probability distribution.}
+\title{Visualize a distribution or sample}
 \usage{
-visualize(dist, details = 0, ...)
+visualize(x, group = 1, inference = NULL, subset = NULL, ...)
 }
 \arguments{
-\item{dist}{\code{SIMPle.dist}, a distribution to visualize.}
+\item{x}{a SIMPle.dist or SIMPle.sample object}
 
-\item{details}{integer, specfies what should be plotted. Possible values are 0 (marginal and
-bivariate densities, default), 1 (quantiles CDF), 2 (extremes histogram), 3 (exceedence frequency)}
+\item{group}{integer, selects group to be plotted}
 
-\item{...}{}
+\item{inference}{SIMPle.inference object, or list of arguments passed to \code{\link{infer}}.}
+
+\item{subset}{integer, set number of points to draw. NULL (default), draws all points.}
+
+\item{...}{named arguments passed to \code{\link{draw_sample}} and \code{\link{GGally::ggpairs}}}
 }
 \value{
-NONE
+
 }
 \description{
-Visualize a probability distribution.
-}
-\examples{
-+++ TODO +++
+Visualize a distribution or sample
 }

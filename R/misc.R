@@ -1,26 +1,10 @@
+## TODO: check if all functions are needed!
 
-
-check_adm <- function(lower, upper, central=NULL){
-  stopifnot(length(lower) == length(upper))
-  if(!is.null(central)){
-    stopifnot(length(lower) == length(central))
-    return(all(lower <= central) & all(upper >= central))
-  }
-  return(all(lower <= upper))
-}
-
-Dir2mBeta <- function(x){
+dir2mbeta <- function(x){
   if(!is.matrix(x)){x <- matrix(x, nrow=1)}
   m <- log(ncol(x), 2); stopifnot(m %% 1 == 0)
   x %*% t(Hmat(m))
-  #sapply(1:m, function(j) rowSums(x[, select_cells(j, m), drop=F]))
 }
-
-select_cells <- function(j, m){
-  stopifnot(j %in% 1:m)
-  rep(rep(c(F,T), each=2^(m-j)), length.out=2^m)
-}
-
 
 Cmat <- function(k=1:2^m, m=3){
   C <- matrix(0, nrow=length(k), ncol=2^m)
@@ -38,20 +22,7 @@ split_data <- function(data, by=rep(1, nrow(data)), names=unique(by), warn=10){
   return(dl)
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-Hrow <- function(j, m, class="integer"){ # TODO: same as select_cells !!!!!!!!??????????!!!!!!!
+Hrow <- function(j, m, class="integer"){
   x <- as(0:1, class)
   rep(rep(x, each=2^(m-j)), length.out=2^m)
 }
@@ -74,33 +45,6 @@ Htmat <- function(m){
                                       1, function(x) paste(x, collapse="."))),
                     "nu")
   return(Ht)
-}
-
-check_mean <- function(dims, mean, ...){
-  if(is.null(mean)){mean <- 1/2}
-  stopifnot(is.numeric(mean))
-  stopifnot(length(mean) %in% c(1, dims))
-  if(length(mean) == 1){mean <- rep(mean, dims)}
-  return(mean)
-}
-
-#' @importFrom matrixcalc is.positive.definite
-check_corr <- function(dims, corr, ...){
-  if(is.null(corr)){corr <- 0}
-  if(is.null(dim(corr)) & is.numeric(corr)){
-    corr <- rho2corr(dims, corr)
-  }
-  stopifnot(nrow(corr) == dims & ncol(corr) == dims)
-  stopifnot(matrixcalc::is.positive.definite(corr))
-  return(corr)
-}
-
-rho2corr <- function(dims, rho){
-  if(is.matrix(rho)){
-    stopifnot(matrixcalc::is.positive.definite(rho))
-    return(rho)
-  }
-  matrix(rho, dims, dims) + diag(rep(1-rho, dims))
 }
 
 mat2vec <- function(M){
@@ -128,5 +72,17 @@ update_gamma <- function(data, prior=2/2^(ncol(data)), control=NULL, ...){
 }
 
 
-
-
+get_mode_mbeta <- function(vars, mode=c("auto", "full", "reduced"), ...){
+  mode <- match.arg(mode)
+  if(mode=="reduced" & vars==2){
+    message("SIMPle: Using full parametrization for bivariate case.")
+    mode <- "full"
+  }
+  if(mode=="full" & vars>10){
+    warning("SIMPle: Full mbeta parametrization not recommended for dimensions > 10!")
+  }
+  if(mode=="auto"){
+    mode <- ifelse(vars>10, "reduced", "full")
+  }
+  return(mode)
+}

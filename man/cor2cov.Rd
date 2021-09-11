@@ -18,5 +18,5 @@ The corresponding covariance matrix.
 Convert a correlation matrix and standard deviations into a covariance matrix.
 }
 \details{
-Copied implementation from \code{psych::cor2cov}.
+Copied implementation from \code{psych::cor2cov}, adapted to work with length(sigma)==1
 }

@@ -1,7 +1,7 @@
-#' Check Frechet bounds
+#' Check Fréchet bounds
 #'
 #' @param moments \code{matrix} a m x m square matrix, it is assumed that the diagonal gives
-#' probabilies for events A_1,...,A_m and the off diagnoal gives
+#' probabilies for events A_1,...,A_m and the off diagonal gives
 #' @param nu \code{numeric}
 #'
 #' @return A list giving detailed results.
@@ -9,7 +9,6 @@
 #'
 #' @details See \url{https://en.wikipedia.org/wiki/Fréchet_inequalities}.
 #'
-#' @examples [+++TODO+++]
 #' @importFrom matrixcalc is.symmetric.matrix
 bound_moments <- function(moments, nu=1){
   stopifnot(is.matrix(moments))

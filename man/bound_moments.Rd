@@ -2,13 +2,13 @@
 % Please edit documentation in R/bound_moments.R
 \name{bound_moments}
 \alias{bound_moments}
-\title{Check Frechet bounds}
+\title{Check Fréchet bounds}
 \usage{
 bound_moments(moments, nu = 1)
 }
 \arguments{
 \item{moments}{\code{matrix} a m x m square matrix, it is assumed that the diagonal gives
-probabilies for events A_1,...,A_m and the off diagnoal gives}
+probabilies for events A_1,...,A_m and the off diagonal gives}
 
 \item{nu}{\code{numeric}}
 }
@@ -16,11 +16,8 @@ probabilies for events A_1,...,A_m and the off diagnoal gives}
 A list giving detailed results.
 }
 \description{
-Check Frechet bounds
+Check Fréchet bounds
 }
 \details{
 See \url{https://en.wikipedia.org/wiki/Fréchet_inequalities}.
-}
-\examples{
-[+++TODO+++]
 }

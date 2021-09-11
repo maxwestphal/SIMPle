@@ -1,11 +1,11 @@
 Package: SIMPle
 Type: Package
 Title: Simultaneous Inference for Multiple Proportions (SIMPle)
-Version: 0.1.0.9000
+Version: 0.2.0
 Authors@R: person("Max", "Westphal", email = "mwestphal@uni-bremen.de",
     role = c("aut", "cre"))
-Description: This package allows to define a multivariate Beta distribution and construct multivariate credible regions by means of the multivariate Beta-Binomial model. +++ DEVELOPMENT VERSION +++ 
+Description: This package implements a multivariate beta distribution and allows to construct multivariate credible regions.
 License: GNU General Public License v3.0
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
