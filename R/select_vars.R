@@ -1,11 +1,11 @@
 #' Select and reorder variables of a distribution
 #'
+#' @param dist \code{SIMPle.dist} object
 #' @param selection integer vector, describes new variable order/selection
 #' @param vars number of variables to select after ordering
 #' @param args list, named arguments passed to order_dist
-#' @param dist SIMPle.dist
 #'
-#' @return A SIMPle.dist, potentially of smaller dimension
+#' @return A \code{SIMPle.dist} object, potentially of smaller dimension
 #' @export
 select_vars <- function(dist,
                         selection = NULL,

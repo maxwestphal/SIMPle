@@ -16,6 +16,8 @@ convert_sample <- function(sample, margin, fun, args = list()){
   return(sample)
 }
 
+# TODO: attributes of result type[2] <- "converted"
+
 #' @export
 ssapply <- convert_sample
 

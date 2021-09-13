@@ -1,31 +1,31 @@
 #' Visualize a distribution or sample
 #'
-#' @param x a SIMPle.dist or SIMPle.sample object
+#' @param x a  \code{SIMPle.dist} or \code{SIMPle.sample} object
 #' @param group integer, selects group to be plotted
-#' @param inference SIMPle.inference object, or list of arguments passed to \code{\link{infer}}.
+#' @param inference \code{SIMPle.result} object (currently ignored!)
 #' @param subset integer, set number of points to draw. NULL (default), draws all points.
-#' @param ... named arguments passed to \code{\link{draw_sample}} and \code{\link{GGally::ggpairs}}
+#' @param ... named arguments passed to \code{\link{draw_sample}} and \code{GGally::ggpairs},
+#' e.g. set alpha via \code{mapping=ggplot2::aes(alpha=0.5)}
 #' @return
 #' @export
 visualize <- function(x, group=1, inference=NULL, subset = NULL,...){
   UseMethod("visualize", x)
 }
 
-# TODO: multiple groups input
-# TODO: check plotting options work: mapping=ggplot2::aes(alpha=0.5)
-# TODO: allow inference input
-# TODO: for dist inference: take corr paramters from dist object
+# TODO: utilize inference input
 
 #' @export
 visualise <- visualize
 
 #' @importFrom GGally ggpairs
 #' @export
-visualize.SIMPle.sample <- function(x, group=1, inference=NULL, subset = NULL,...){
+visualize.SIMPle.sample <- function(x, group=NULL, inference=NULL, subset = NULL,...){
+  if(is.null(group)){group <- 1:length(x)}
   stopifnot(group %in% 1:length(x))
-  subset_sample1(x[[group]], subset) %>%
-    as.data.frame() %>%
-    GGally::ggpairs()
+  data <- sapply(group, function(g){subset_sample1(x[[g]], subset=subset)}) %>% as.data.frame()
+  colnames(data) <- paste0(rep(names(x), each=ncol(x[[1]])), "_",
+                           rep(colnames(x[[1]]), length(x)))
+  GGally::ggpairs(as.data.frame(data))
 }
 
 #' @export

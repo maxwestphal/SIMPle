@@ -1,4 +1,4 @@
-# ++ copied from package ddpcr ++
+# +++ copied from package ddpcr +++
 #' @importFrom utils capture.output
 quiet <- function (expr, all = TRUE)
 {
@@ -16,5 +16,3 @@ quiet <- function (expr, all = TRUE)
     utils::capture.output(expr, file = file)
   }
 }
-
-# TODO: needed?

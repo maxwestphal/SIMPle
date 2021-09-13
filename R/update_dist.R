@@ -19,3 +19,22 @@ update_dist.SIMPle.dist <- function(dist, data, control=list()){
   do.call(D$update, args = args)
 }
 
+#' Split up data matrix by subgroups
+#'
+#' @param data matrix, contains (binary 0/1) data
+#' @param by integer vector
+#' @param names character, names of subgroups
+#' @param warn integer, a warning is given if \code{length(unique(by)) > warn}
+#'
+#' @return a list of data matrices
+#' @export
+#'
+#' @details useful to pass data to \code{\link{update_dist}} if \code{groups(dist) > 1}
+split_data <- function(data, by=rep(1, nrow(data)), names=unique(by), warn=10){
+  stopifnot(all.equal(nrow(data), length(by), length(names)))
+  u <- unique(by); stopifnot(length(names) == length(u))
+  if(length(u) > warn){warning("Data split into ", length(u), " subgroups. Intended?")}
+  dl <- lapply(u, function(x){data[by==u, ]})
+  names(dl) <- names
+  return(dl)
+}

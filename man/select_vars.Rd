@@ -7,7 +7,7 @@
 select_vars(dist, selection = NULL, vars = NULL, args = list())
 }
 \arguments{
-\item{dist}{SIMPle.dist}
+\item{dist}{\code{SIMPle.dist} object}
 
 \item{selection}{integer vector, describes new variable order/selection}
 
@@ -16,7 +16,7 @@ select_vars(dist, selection = NULL, vars = NULL, args = list())
 \item{args}{list, named arguments passed to order_dist}
 }
 \value{
-A SIMPle.dist, potentially of smaller dimension
+A \code{SIMPle.dist} object, potentially of smaller dimension
 }
 \description{
 Select and reorder variables of a distribution

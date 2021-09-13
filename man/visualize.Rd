@@ -7,15 +7,16 @@
 visualize(x, group = 1, inference = NULL, subset = NULL, ...)
 }
 \arguments{
-\item{x}{a SIMPle.dist or SIMPle.sample object}
+\item{x}{a  \code{SIMPle.dist} or \code{SIMPle.sample} object}
 
 \item{group}{integer, selects group to be plotted}
 
-\item{inference}{SIMPle.inference object, or list of arguments passed to \code{\link{infer}}.}
+\item{inference}{\code{SIMPle.result} object (currently ignored!)}
 
 \item{subset}{integer, set number of points to draw. NULL (default), draws all points.}
 
-\item{...}{named arguments passed to \code{\link{draw_sample}} and \code{\link{GGally::ggpairs}}}
+\item{...}{named arguments passed to \code{\link{draw_sample}} and \code{GGally::ggpairs},
+e.g. set alpha via \code{mapping=ggplot2::aes(alpha=0.5)}}
 }
 \value{
 

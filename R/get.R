@@ -9,6 +9,11 @@ type.SIMPle.dist <- function(x){
 }
 
 #' @export
+type.SIMPle.sample <- function(x){
+  attr(x, "type")
+}
+
+#' @export
 support <- function(x){
   UseMethod("support", x)
 }
@@ -29,12 +34,22 @@ vars.SIMPle.dist <- function(x){
 }
 
 #' @export
+vars.SIMPle.sample <- function(x){
+  attr(x, "vars")
+}
+
+#' @export
 varnames <- function(x){
   UseMethod("varnames", x)
 }
 
 #' @export
 varnames.SIMPle.dist <- function(x){
+  attr(x, "varnames")
+}
+
+#' @export
+varnames.SIMPle.sample <- function(x){
   attr(x, "varnames")
 }
 
@@ -49,12 +64,22 @@ groups.SIMPle.dist <- function(x){
 }
 
 #' @export
+groups.SIMPle.sample <- function(x){
+  attr(x, "groups")
+}
+
+#' @export
 groupnames <- function(x){
   UseMethod("groupnames", x)
 }
 
 #' @export
 groupnames.SIMPle.dist <- function(x){
+  attr(x, "groupnames")
+}
+
+#' @export
+groupnames.SIMPle.sample <- function(x){
   attr(x, "groupnames")
 }
 

@@ -1,25 +1,7 @@
-## TODO: check if all functions are needed!
-
 dir2mbeta <- function(x){
   if(!is.matrix(x)){x <- matrix(x, nrow=1)}
   m <- log(ncol(x), 2); stopifnot(m %% 1 == 0)
   x %*% t(Hmat(m))
-}
-
-Cmat <- function(k=1:2^m, m=3){
-  C <- matrix(0, nrow=length(k), ncol=2^m)
-  C[cbind(1:length(k), k)] <- 1
-  return(C)
-}
-
-
-split_data <- function(data, by=rep(1, nrow(data)), names=unique(by), warn=10){
-  stopifnot(all.equal(nrow(data), length(by), length(names)))
-  u <- unique(by); stopifnot(length(names) == length(u))
-  if(length(u) > warn){warning("Data split into ", length(u), " subgroups. Intended?")}
-  dl <- lapply(u, function(x){data[by==u, ]})
-  names(dl) <- names
-  return(dl)
 }
 
 Hrow <- function(j, m, class="integer"){
@@ -35,16 +17,6 @@ H2mat <- function(m=3){
   H <- Hmat(m)
   I <- data.frame(j=rep(1:m, times=m:1-1), k=unlist(sapply(1:(m-1), function(j) (j+1):m)))
   t(apply(I, 1, function(x) H[x[1], ]*H[x[2], ]))
-}
-
-Htmat <- function(m){
-  Ht <- rbind(Hmat(m), H2mat(m), 1)
-  rownames(Ht) <- c(paste0("a", 1:m),
-                    paste0("a", apply(data.frame(j=rep(1:m, times=m:1-1),
-                                                 k=unlist(sapply(1:(m-1), function(j) (j+1):m))),
-                                      1, function(x) paste(x, collapse="."))),
-                    "nu")
-  return(Ht)
 }
 
 mat2vec <- function(M){
@@ -86,3 +58,6 @@ get_mode_mbeta <- function(vars, mode=c("auto", "full", "reduced"), ...){
   }
   return(mode)
 }
+
+
+

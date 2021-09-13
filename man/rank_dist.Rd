@@ -27,7 +27,7 @@ rank_dist(
 
 \item{size}{integer, sample size(s) in predictive sample}
 
-\item{ties.method}{character, see argument ties.method from function \code{\link{base::rank}}}
+\item{ties.method}{character, see argument ties.method from function \code{base::rank}}
 }
 \description{
 Rank margins of a multivariate distribution

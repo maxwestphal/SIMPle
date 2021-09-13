@@ -95,12 +95,6 @@ sample_mbeta1 <- function(dist, g=1, n=10000, method = "reduced", proj.pd = TRUE
   }
 }
 
-visualize_mbeta <- function(dist, S=NULL, ...){
-  ## TODO: groups > 1
-  if(is.null(S)){S <- dist %>% draw_sample(...)}
-  pairs_dist(dist=dist, S, ...)
-}
-
 margin_params_mbeta <- function(dist, which=1:length(dist), simplify=TRUE){
   out <- lapply(which, function(g){
     alpha <- diag(params(dist, g)$moments)
@@ -123,7 +117,6 @@ DIST[["mbeta"]] <- list(dim.range = c(1, Inf),
                         check_data = check_data_mbeta,
                         update = update_mbeta,
                         sample = sample_mbeta,
-                        visualize = visualize_mbeta,
                         margin_params = margin_params_mbeta,
                         ddist = dbeta,
                         pdist = pbeta,

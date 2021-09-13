@@ -4,7 +4,7 @@
 #' @param method character, base order on dist parameters ("params") or sample ("sample")
 #' @param target character, basis for ordering
 #' @param combine character, way to combine across groups
-#' @param ties.method character, see argument ties.method from function \code{\link{base::rank}}
+#' @param ties.method character, see argument ties.method from function \code{base::rank}
 #' @param threshold numeric, threshold values (vector of length groups(dist))
 #' @param size integer, sample size(s) in predictive sample
 #'
@@ -25,7 +25,7 @@ order_dist <- function(dist,
 #' @param method character, base order on dist parameters ("params") or sample ("sample")
 #' @param target character, basis for ordering
 #' @param combine character, way to combine across groups
-#' @param ties.method character, see argument ties.method from function \code{\link{base::rank}}
+#' @param ties.method character, see argument ties.method from function \code{base::rank}
 #' @param threshold numeric, threshold values (vector of length groups(dist))
 #' @param size integer, sample size(s) in predictive sample
 #'
@@ -116,8 +116,9 @@ append_class <- function(x, newclass){
   return(x)
 }
 
-copy_attr <- function(to, from, which){
-  mostattributes(to) <- attributes(from)[which]
+copy_attr <- function(to, from, what=NULL){
+  if(is.null(what)){what <- 1:length(attributes(dist))}
+  mostattributes(to) <- attributes(from)[what]
   return(to)
 }
 

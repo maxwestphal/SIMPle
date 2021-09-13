@@ -45,7 +45,7 @@ draw_sample_pred <- function(dist,
   }
 }
 
-## TODO: 'exact method for 'full' parametrisation
+## TODO: 'exact' method for 'full' parametrisation via base::sample()
 draw_sample_mbeta1 <- function(g, sample_ext, size, regu=1, count=TRUE, correct=TRUE){
   vars <- nrow(sample_ext[[1]][[1]])
   mom <- matrix(regu/4, vars, vars)+diag(rep(regu/4, vars))
