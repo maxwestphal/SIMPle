@@ -9,10 +9,14 @@ draw_sample(dist, n = 10000, method = "auto", msg = TRUE, ...)
 \arguments{
 \item{dist}{SIMPle.dist or SIMPle.dlist, specifies distribution to sample from}
 
-\item{n}{integer; number of sampled observations}
+\item{n}{integer, number of sampled observations}
 
-\item{method}{character; specifies sampling method. Either "mcmc" for Monte Carlo (MC)
+\item{method}{character, specifies sampling method. Either "mcmc" for Monte Carlo (MC)
 Simulation or "copula" for univariate MC + Copula approach}
+
+\item{msg}{logical, should messages be displayed?}
+
+\item{...}{further args (currently unused)}
 }
 \value{
 A data matrix representing the sample

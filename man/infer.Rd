@@ -6,8 +6,8 @@
 \usage{
 infer(
   x,
-  stats = "mean",
   prob = 0.95,
+  stats = "mean",
   aggr_var = "all",
   aggr_group = "&",
   method = c("auto", "sample", "copula", "approx"),
@@ -17,9 +17,9 @@ infer(
 \arguments{
 \item{x}{a \code{SIMPle.dist} or \code{SIMPle.sample} object}
 
-\item{stats}{character, specifies statistics to be calculated}
-
 \item{prob}{numeric, coverage probability of credible interval}
+
+\item{stats}{character, specifies statistics to be calculated}
 
 \item{aggr_var}{character, function name how cover events are aggregated across variables}
 
@@ -27,7 +27,7 @@ infer(
 
 \item{method}{character, method to calculate credible regions}
 
-\item{...}{}
+\item{...}{further arguments, e.g. passed to \code{\link{draw_sample}} if method="sample"}
 }
 \value{
 \code{SIMPle.result} object

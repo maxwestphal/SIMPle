@@ -6,13 +6,15 @@
 #' @param aggr_var character, function name how cover events are aggregated across variables
 #' @param aggr_group character, function name how cover events are aggregated across groups
 #' @param method character, method to calculate credible regions
-#' @param ...
+#' @param ... further arguments, e.g. passed to \code{\link{draw_sample}} if method="sample"
+#'
+#' @importFrom mvtnorm qmvnorm
 #'
 #' @return \code{SIMPle.result} object
 #' @export
 infer <- function(x,
-                  stats = "mean",
                   prob = 0.95,
+                  stats = "mean",
                   aggr_var = "all",
                   aggr_group = "&",
                   method = c("auto", "sample", "copula", "approx"),
@@ -32,7 +34,11 @@ infer.SIMPle.dist <- function(x,
 
   if(method=="auto"){
     if(groups(x) >  1){method <- "sample"}
-    if(groups(x) == 1){method <- "copula"}
+    if(groups(x) == 1){
+      method <- switch(type(dist)[2],
+                       full = "sample",
+                       reduced = "copula")
+    }
   }
   message(paste0("SIMPle: Conducting inference (method: ", method, ")"))
 
@@ -58,7 +64,6 @@ infer.SIMPle.sample <- function(x,
                                 method = c("auto", "sample", "copula", "approx"),
                                 ...){
   stopifnot(match.arg(method) %in% c("auto", "sample"))
-  message("SIMPle: Conducting inference (method: sample)")
 
   st <- calc_stats(stats, args$sample, args$dist)
   cr <- do.call(paste0("infer_", method), args=args)
@@ -69,6 +74,7 @@ infer.SIMPle.sample <- function(x,
 
 }
 
+#' @importFrom stats pnorm
 infer_copula <- function(dist,
                          sample,
                          prob = 0.95,
@@ -76,8 +82,8 @@ infer_copula <- function(dist,
                          ...){
   stopifnot(groups(dist) == 1)
 
-  R <- cov2cor(features(dist, 1)$cov)
-  pr <- 1-(1-pnorm(mvtnorm::qmvnorm(1-(1-prob)/2, tail="lower.tail", corr=R)$quantile))*2
+  R <- stats::cov2cor(features(dist, 1)$cov)
+  pr <- 1-(1-stats::pnorm(mvtnorm::qmvnorm(1-(1-prob)/2, tail="lower.tail", corr=R)$quantile))*2
   cr <- get_cr(pr, sample, dist)
 
   return(cr)
@@ -92,7 +98,7 @@ infer_approx <- function(dist,
 
   mu <- features(dist, 1)$mean
   C <- features(dist, 1)$cov
-  R <- cov2cor(C)
+  R <- stats::cov2cor(C)
   se <- sqrt(diag(C))
   cv <- mvtnorm::qmvnorm(1-(1-prob)/2, tail="lower.tail", corr=R)$quantile
   cr <- data.frame(lower = as.numeric(mu - cv*se),
@@ -136,24 +142,32 @@ coverage <- function(pr,
   return(cover-prob)
 }
 
+#' @importFrom stats uniroot
 opt_cr <- function(prob, sample, dist=NULL, aggr_var="all", aggr_group="&"){
-  uniroot(f=coverage, interval=c(1e-3, 1-1e-3),
-          prob=prob, sample=sample, dist=dist,
-          aggr_var=aggr_var, aggr_group=aggr_group)$root
+  stats::uniroot(f=coverage, interval=c(1e-3, 1-1e-3),
+                 prob=prob, sample=sample, dist=dist,
+                 aggr_var=aggr_var, aggr_group=aggr_group)$root
 }
+
+#' @importFrom stats qbeta
+#' @importFrom stats quantile
+#' @importFrom stats setNames
 
 get_cr <- function(pr, sample, dist=NULL){
   if(!is.null(dist)){
-    # TODO: change to theoretical quantiles
-    cr <- lapply(1:length(sample), function(g){
-      apply(sample[[g]], 2, quantile, probs=c((1-pr)/2, 1-(1-pr)/2) ) %>%
-        t() %>% as.data.frame() %>% setNames(c("lower", "upper"))
+    cr <- lapply(1:groups(dist), function(g){
+      a <- diag(params(dist, g)$moments)
+      b <- params(dist, g)$nu - a
+      data.frame(
+        lower = stats::qbeta((1-pr)/2, shape1=a, shape2=b),
+        upper = stats::qbeta(1-(1-pr)/2, shape1=a, shape2=b)
+      )
     })
   }
   if(is.null(dist)){
     cr <- lapply(1:length(sample), function(g){
-      apply(sample[[g]], 2, quantile, probs=c((1-pr)/2, 1-(1-pr)/2) ) %>%
-        t() %>% as.data.frame() %>% setNames(c("lower", "upper"))
+      apply(sample[[g]], 2, stats::quantile, probs=c((1-pr)/2, 1-(1-pr)/2) ) %>%
+        t() %>% as.data.frame() %>% stats::setNames(c("lower", "upper"))
     })
   }
   return(cr)
