@@ -1,11 +1,34 @@
 Package: SIMPle
 Type: Package
 Title: Simultaneous Inference for Multiple Proportions (SIMPle)
-Version: 0.2.0
-Authors@R: person("Max", "Westphal", email = "mwestphal@uni-bremen.de",
-    role = c("aut", "cre"))
+Version: 0.2.1
+Authors@R: 
+    person(given = "Max",
+           family = "Westphal",
+           role = c("aut", "cre"),
+           email = "mwestphal@uni-bremen.de",
+           comment = c(ORCID = "0000-0002-8488-758X"))
 Description: This package implements a multivariate beta distribution and allows to construct multivariate credible regions.
-License: GNU General Public License v3.0
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
+Imports: 
+    GGally,
+    extraDistr,
+    bindata,
+    copula,
+    limSolve,
+    magrittr,
+    matrixcalc,
+    Matrix,
+    mvtnorm,
+    methods,
+    stats,
+    utils,
+    rlang
+Suggests: 
+    knitr,
+    rmarkdown,
+    badger
+URL: https://github.com/maxwestphal/SIMPle

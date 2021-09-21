@@ -5,9 +5,9 @@
 \title{Construct the gamma parameter for the multivariate Beta (mbeta) distribution.}
 \usage{
 construct_gamma(
-  vars = 3,
-  nu,
-  moments,
+  vars,
+  nu = 1,
+  moments = nu * (matrix(1/4, vars, vars) + diag(rep(1/4, vars))),
   corr = NULL,
   tol = 0.01,
   input = "moments",
@@ -15,17 +15,20 @@ construct_gamma(
 )
 }
 \arguments{
-\item{vars}{\code{integer}, dimension of multivariate beta distribution.}
+\item{vars}{integer, dimension of multivariate beta distribution.}
 
-\item{nu}{\code{numeric}, equal to the sum of resulting gamma vector (prior observations).}
+\item{nu}{numeric, equal to the sum of resulting gamma vector (prior observations).}
 
-\item{moments}{\code{matrix}, .... The entry (j,k) of \code{cp} specifies the
+\item{moments}{matrix, .... The entry (j,k) of \code{cp} specifies the
 expected joint probability P(B_j = B_k = 1). See details.}
 
-\item{tol}{\code{numeric}, if obtained momemnt matrix deviates more than \code{tol} from the target
-a warning is given. See details.}
+\item{corr}{matrix, correlation matrix, only needs to be supplied if input="corr" (default: NULL)}
 
-\item{method}{\code{integer}, ... either 1 (\code{lsei}) or 2 (\code{solve.QP}). Is passed to limSolve::lsei.}
+\item{tol}{numeric, if obtained momemnt matrix deviates more than \code{tol} from the target}
+
+\item{input}{character, either "moments" (default) or "corr"}
+
+\item{...}{a warning is given. See details.}
 }
 \value{
 A numeric vector gamma of length 2^dims suitable as a parameter for

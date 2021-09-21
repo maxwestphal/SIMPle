@@ -34,7 +34,7 @@ select_vars <- function(dist,
   for(g in 1:groups(out)){
 
     D <- diag(c(rep(1, vars), rep(0, vars(dist)-vars)))[1:vars, ]
-    P <- as.matrix(as(selection, "pMatrix"))
+    P <- as.matrix(methods::as(selection, "pMatrix"))
     M <- D %*% P
 
     out[[g]]$params$moments <- M %*% dist[[g]]$params$moments %*% t(M)

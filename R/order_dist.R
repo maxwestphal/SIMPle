@@ -65,9 +65,9 @@ rank_dist_sample <- function(dist, target, combine, threshold, size){
              (s*(sample[[g]]-threshold[g])) > 0
            })
   ) %>%
-    ssapply(3, match.fun(combine)) %>%
-    ssapply(2, mean) %>%
-    {as.numeric(.[[1]])} %>%
+    convert_sample(3, match.fun(combine)) %>%
+    convert_sample(2, mean) %>%
+    {as.numeric(.data[[1]])} %>%
     return()
 }
 
@@ -75,6 +75,7 @@ tstat1 <- function(est, threshold, size){
   (est-threshold)/sqrt(est*(1-est)/size)
 }
 
+#' @importFrom stats pbeta
 rank_dist_param <- function(dist, target, combine, threshold, size){
   lapply(1:groups(dist), function(g){
     mom <- diag(params(dist, g)$moments)
@@ -82,12 +83,12 @@ rank_dist_param <- function(dist, target, combine, threshold, size){
     switch(target,
            mean = (mom/nu),
            tstat = (mom/nu-threshold[g])/sqrt(mom/nu*(1-mom/nu)/nu),
-           prob = pbeta(threshold[g], mom, nu-mom, lower.tail = FALSE)
+           prob = stats::pbeta(threshold[g], mom, nu-mom, lower.tail = FALSE)
     ) %>%
       matrix(nrow=1)
   })  %>%
-    ssapply(3, match.fun(combine)) %>%
-    {as.numeric(.[[1]])} %>%
+    convert_sample(3, match.fun(combine)) %>%
+    {as.numeric(.data[[1]])} %>%
     return()
 }
 
@@ -96,6 +97,8 @@ rank_dist_param <- function(dist, target, combine, threshold, size){
 #' @param dist a SIMPle.dist object
 #' @param n integer, the sample size
 #'
+#' @importFrom stats rbeta
+#'
 #' @return \code{SIMPle.sample} object
 #' @export
 sample_dist_marginal <- function(dist, n=10000){
@@ -103,7 +106,7 @@ sample_dist_marginal <- function(dist, n=10000){
   b <- lapply(params(dist, simplify=FALSE), function(x) x$nu - diag(x$moments))
   lapply(1:groups(dist), function(g){
     sapply(1:vars(dist), function(j){
-      rbeta(n, a[[g]][j], b[[g]][j])
+      stats::rbeta(n, a[[g]][j], b[[g]][j])
     })
   }) %>%
     copy_attr(dist, c("vars", "varnames", "groups", "groupnames")) %>%
@@ -117,7 +120,7 @@ append_class <- function(x, newclass){
 }
 
 copy_attr <- function(to, from, what=NULL){
-  if(is.null(what)){what <- 1:length(attributes(dist))}
+  if(is.null(what)){what <- 1:length(attributes(from))}
   mostattributes(to) <- attributes(from)[what]
   return(to)
 }

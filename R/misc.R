@@ -4,8 +4,9 @@ dir2mbeta <- function(x){
   x %*% t(Hmat(m))
 }
 
+#' @importFrom methods as
 Hrow <- function(j, m, class="integer"){
-  x <- as(0:1, class)
+  x <- methods::as(0:1, class)
   rep(rep(x, each=2^(m-j)), length.out=2^m)
 }
 

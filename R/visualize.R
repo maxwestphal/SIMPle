@@ -6,27 +6,43 @@
 #' @param subset integer, set number of points to draw. NULL (default), draws all points.
 #' @param ... named arguments passed to \code{\link{draw_sample}} and \code{GGally::ggpairs},
 #' e.g. set alpha via \code{mapping=ggplot2::aes(alpha=0.5)}
-#' @return
+#' @return GGally::ggpairs plot applied to (prior/posterior) sample
 #' @export
 visualize <- function(x, group=1, inference=NULL, subset = NULL,...){
   UseMethod("visualize", x)
 }
 
-# TODO: utilize inference input
-
-#' @export
-visualise <- visualize
-
 #' @importFrom GGally ggpairs
 #' @export
-visualize.SIMPle.sample <- function(x, group=NULL, inference=NULL, subset = NULL,...){
-  if(is.null(group)){group <- 1:length(x)}
+visualize.SIMPle.sample <- function(x, group=1, inference=NULL, subset = NULL,...){
   stopifnot(group %in% 1:length(x))
-  data <- sapply(group, function(g){subset_sample1(x[[g]], subset=subset)}) %>% as.data.frame()
-  colnames(data) <- paste0(rep(names(x), each=ncol(x[[1]])), "_",
-                           rep(colnames(x[[1]]), length(x)))
-  GGally::ggpairs(as.data.frame(data))
+  data <- do.call(dplyr::bind_cols,
+                  lapply(group, function(g){as.data.frame(subset_sample1(x[[g]], subset=subset))} ))
+  colnames(data) <- get_labels(x=x, group=group)
+  GGally::ggpairs(data)
 }
+
+get_labels <- function(x, group){
+  if(length(group) == 1){
+    gn <- ""
+  }
+  if(length(group) > 1 & is.null(groupnames(x))){
+    gn <- paste0("group", 1:length(x), "_")
+  }
+  if(length(group) > 1 & !is.null(groupnames(x))){
+    gn <- paste0("group", 1:length(x), "_")
+  }
+  v <- ifelse(is.null(vars(x)), ncol(x[[1]]), vars(x))
+  if(is.null(varnames(x))){
+    vn <- paste0("var", 1:v)
+  }
+  if(!is.null(varnames(x))){
+    vn <- varnames(x)
+  }
+  labels <- paste0(rep(gn, each=v), rep(vn, length(x)))
+  return(labels)
+}
+
 
 #' @export
 visualize.SIMPle.dist <- function(x, group=1, inference=NULL, subset = NULL,...){

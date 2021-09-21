@@ -16,11 +16,6 @@ convert_sample <- function(sample, margin, fun, args = list()){
   return(sample)
 }
 
-# TODO: attributes of result type[2] <- "converted"
-
-#' @export
-ssapply <- convert_sample
-
 check_margin <- function(m){
   if(is.character(m)){
     m <- as.numeric(sapply(m, function(x) which(x==c("obs", "var", "group"))))
@@ -43,8 +38,9 @@ ssapply2 <- function(s, fun, args){
            matrix(nrow=1, ncol=ncol(x)))
 }
 
+#' @importFrom rlang .data
 ssapply3 <- function(s, fun, args){
   array(unlist(s), dim = c(nrow(s[[1]]), ncol(s[[1]]), length(s))) %>%
-    {do.call(apply, c(list(X=., MARGIN=1:2, FUN=fun), args))} %>%
+    {do.call(apply, c(list(X=.data, MARGIN=1:2, FUN=fun), args))} %>%
     list()
 }

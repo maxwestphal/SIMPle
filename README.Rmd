@@ -1,0 +1,43 @@
+---
+title: "SIMPle README"
+output: md_document
+---
+
+# SIMPle: Simultaneous Inference for Multiple Proportions 
+
+<a href="https://www.repostatus.org/#wip"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public." /></a>
+[![R build status](https://github.com/maxwestphal/SIMPle/workflows/R-CMD-check/badge.svg)](https://github.com/maxwestphal/SIMPle/actions)
+`r badger::badge_devel(color="blue")`
+`r badger::badge_cran_release(color="orange")`
+
+
+---
+
+## Overview
+
+This **R package** implements a multivariate beta distribution and allows to construct credible regions for multiple proportions.
+
+**NOTE: This package is no longer maintained!**
+
+
+---
+
+## Installation
+
+The package can be downloaded and installed in R by running 
+
+```{r install, eval=FALSE, echo=TRUE}
+remotes::install_github("https://github.com/maxwestphal/SIMPle")
+```
+
+
+---
+
+## Details
+
+The package implements methods from the paper
+
+[*Westphal, Max. "Simultaneous Inference for Multiple Proportions: A Multivariate Beta-Binomial Model." arXiv preprint arXiv:1911.00098 (2019).*](https://arxiv.org/abs/1911.00098)
+
+It is primarily intended for reproduction of the numerical experiments described at [https://github.com/maxwestphal/SEPM.PUB](https://github.com/maxwestphal/SEPM.PUB).
+

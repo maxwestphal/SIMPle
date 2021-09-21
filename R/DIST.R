@@ -75,7 +75,8 @@ sample_mbeta <- function(dist, n=10000,
   return(result)
 }
 
-#' @importFrom  MCMCpack rdirichlet
+#' @importFrom  extraDistr rdirichlet
+#' @importFrom  Matrix nearPD
 #' @importFrom  copula normalCopula
 #' @importFrom  copula P2p
 #' @importFrom  copula mvdc
@@ -83,11 +84,11 @@ sample_mbeta <- function(dist, n=10000,
 sample_mbeta1 <- function(dist, g=1, n=10000, method = "reduced", proj.pd = TRUE, msg=TRUE){
   if(msg)message(c("SIMPle: Drawing sample from ", type(dist)[1], " distribution (method: ", method, ")"))
   if(method=="full"){
-    return(dir2mbeta(MCMCpack::rdirichlet(n=n, alpha=params(dist, g, simplify=TRUE)$gamma)))
+    return(dir2mbeta(extraDistr::rdirichlet(n=n, alpha=params(dist, g, simplify=TRUE)$gamma)))
   }
   if(method=="reduced"){
-    if(!proj.pd){R <- cov2cor(features(dist, g)$cov)}
-    if(proj.pd){R <- cov2cor(as.matrix(Matrix::nearPD(features(dist, g)$cov)$mat))}
+    if(!proj.pd){R <- stats::cov2cor(features(dist, g)$cov)}
+    if(proj.pd){R <- stats::cov2cor(as.matrix(Matrix::nearPD(features(dist, g)$cov)$mat))}
     cop <- copula::normalCopula(param=copula::P2p(R), dim=vars(dist), dispstr = "un")
     mp <- margin_params(dist, g) %>% lapply(as.list) %>% lapply(setNames, nm=c("shape1", "shape2"))
     mvd <- copula::mvdc(cop, margins = rep("beta", vars(dist)), paramMargins = mp)
@@ -95,8 +96,8 @@ sample_mbeta1 <- function(dist, g=1, n=10000, method = "reduced", proj.pd = TRUE
   }
 }
 
-margin_params_mbeta <- function(dist, which=1:length(dist), simplify=TRUE){
-  out <- lapply(which, function(g){
+margin_params_mbeta <- function(dist, groups=1:length(dist), simplify=TRUE){
+  out <- lapply(groups, function(g){
     alpha <- diag(params(dist, g)$moments)
     nu <- params(dist, g)$nu
     lapply(1:vars(dist), function(j) c(alpha=alpha[j], beta=nu-alpha[j]))
@@ -117,9 +118,5 @@ DIST[["mbeta"]] <- list(dim.range = c(1, Inf),
                         check_data = check_data_mbeta,
                         update = update_mbeta,
                         sample = sample_mbeta,
-                        margin_params = margin_params_mbeta,
-                        ddist = dbeta,
-                        pdist = pbeta,
-                        qdist = qbeta,
-                        rdist = rbeta)
+                        margin_params = margin_params_mbeta)
 

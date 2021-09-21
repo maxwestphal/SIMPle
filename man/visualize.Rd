@@ -19,7 +19,7 @@ visualize(x, group = 1, inference = NULL, subset = NULL, ...)
 e.g. set alpha via \code{mapping=ggplot2::aes(alpha=0.5)}}
 }
 \value{
-
+GGally::ggpairs plot applied to (prior/posterior) sample
 }
 \description{
 Visualize a distribution or sample

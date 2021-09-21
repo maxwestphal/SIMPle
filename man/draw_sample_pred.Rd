@@ -12,7 +12,6 @@ draw_sample_pred(
   method_ext = c("basic", "cov"),
   regu = 1,
   count = TRUE,
-  correct = TRUE,
   msg = TRUE
 )
 }
@@ -31,9 +30,7 @@ draw_sample_pred(
 
 \item{count}{logical, should outcome be counts (TRUE) or probabilities (FALSE)}
 
-\item{correct}{logical, should outcome be enforced to correspond to correct counts?}
-
-\item{msg}{}
+\item{msg}{logical, should messages be displayed? (default: TRUE)}
 }
 \description{
 Draw a sample from the predictive (mbeta-mbin) distribution
