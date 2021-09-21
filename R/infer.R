@@ -35,7 +35,7 @@ infer.SIMPle.dist <- function(x,
   if(method=="auto"){
     if(groups(x) >  1){method <- "sample"}
     if(groups(x) == 1){
-      method <- switch(type(dist)[2],
+      method <- switch(type(x)[2],
                        full = "sample",
                        reduced = "copula")
     }

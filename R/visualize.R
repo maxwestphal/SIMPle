@@ -16,7 +16,7 @@ visualize <- function(x, group=1, inference=NULL, subset = NULL,...){
 #' @export
 visualize.SIMPle.sample <- function(x, group=1, inference=NULL, subset = NULL,...){
   stopifnot(group %in% 1:length(x))
-  data <- do.call(dplyr::bind_cols,
+  data <- do.call(cbind,
                   lapply(group, function(g){as.data.frame(subset_sample1(x[[g]], subset=subset))} ))
   colnames(data) <- get_labels(x=x, group=group)
   GGally::ggpairs(data)
