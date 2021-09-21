@@ -1,9 +1,13 @@
 # SIMPle: Simultaneous Inference for Multiple Proportions
 
+<<<<<<< HEAD
 [![Project Status: Inactive – The project has reached a stable, usable
 state but is no longer being actively developed; support/maintenance
 will be provided as time
 allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
+=======
+<a href="https://www.repostatus.org/#wip"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public." /></a>
+>>>>>>> ce1b56de21d9254ca58993913b125406b2049579
 [![R build
 status](https://github.com/maxwestphal/SIMPle/workflows/R-CMD-check/badge.svg)](https://github.com/maxwestphal/SIMPle/actions)
 [![](https://img.shields.io/badge/devel%20version-0.2.1-blue.svg)](https://github.com/maxwestphal/SIMPle)
