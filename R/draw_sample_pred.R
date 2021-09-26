@@ -73,7 +73,7 @@ normalize_gamma <- function(gamma){
 draw_sample_mbeta1 <- function(g, sample_ext, size, regu=1){
   vars <- nrow(sample_ext[[1]][[1]])
   mom <- matrix(regu/4, vars, vars)+diag(rep(regu/4, vars))
-  lapply(sample_ext[[g]], function(cp){
+  ss <- lapply(sample_ext[[g]], function(cp){
     quiet(
       return(
         define_dist(nu=size[g]+regu, moments = mom+cp*size[g], mode="reduced", msg =FALSE) %>%
@@ -81,8 +81,8 @@ draw_sample_mbeta1 <- function(g, sample_ext, size, regu=1){
           prob_postproc(size[g], count=TRUE, correct=TRUE)
       ),
       all=TRUE)
-  }) %>%
-   do.call(rbind, .data) %>% unname() %>% as.matrix()
+  })
+  do.call(rbind, ss) %>% unname() %>% as.matrix()
 }
 
 prob_postproc <- function(prob, n=1, count=FALSE, correct=FALSE){
@@ -95,15 +95,15 @@ prob_postproc <- function(prob, n=1, count=FALSE, correct=FALSE){
 draw_sample_mbin1 <- function(g, sample_ext, size, regu=1){
   vars <- nrow(sample_ext[[1]][[1]])
   mom <- matrix(regu/4, vars, vars)+diag(rep(regu/4, vars))
-  lapply(sample_ext[[g]], function(cp){
+  ss <- lapply(sample_ext[[g]], function(cp){
     quiet(
       return(
         colMeans(bindata::rmvbin(size[g], commonprob = (cp*vars+mom)/(vars+regu) ))
         ),
       all=TRUE
     )
-  }) %>%
-    do.call(rbind, .data)
+  })
+  do.call(rbind, ss)
 }
 
 draw_sample_ext <- function(dist, sample=100, method_ext = "basic", msg=TRUE){

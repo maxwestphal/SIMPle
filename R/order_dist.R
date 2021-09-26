@@ -52,23 +52,23 @@ rank_dist <- function(dist,
 
 rank_dist_sample <- function(dist, target, combine, threshold, size){
   sample <- sample_dist_marginal(dist, n=10000)
-  s <- 1 # ifelse(prob_type == "greater", 1, -1)
-  switch(target,
-         mean =
-           sample,
-         tstat =
-           lapply(1:length(sample), function(g){
-             tstat1(sample[[g]], threshold[g], size[g])
-           }),
-         prob =
-           lapply(1:groups(dist), function(g){
-             (s*(sample[[g]]-threshold[g])) > 0
-           })
-  ) %>%
+  s <- 1 # TODO: ifelse(prob_type == "greater", 1, -1)
+  out <-
+    switch(target,
+           mean =
+             sample,
+           tstat =
+             lapply(1:length(sample), function(g){
+               tstat1(sample[[g]], threshold[g], size[g])
+             }),
+           prob =
+             lapply(1:groups(dist), function(g){
+               (s*(sample[[g]]-threshold[g])) > 0
+             })
+    ) %>%
     convert_sample(3, match.fun(combine)) %>%
-    convert_sample(2, mean) %>%
-    {as.numeric(.data[[1]])} %>%
-    return()
+    convert_sample(2, mean)
+  return(as.numeric(out[[1]]))
 }
 
 tstat1 <- function(est, threshold, size){
@@ -77,19 +77,19 @@ tstat1 <- function(est, threshold, size){
 
 #' @importFrom stats pbeta
 rank_dist_param <- function(dist, target, combine, threshold, size){
-  lapply(1:groups(dist), function(g){
-    mom <- diag(params(dist, g)$moments)
-    nu <- params(dist, g)$nu
-    switch(target,
-           mean = (mom/nu),
-           tstat = (mom/nu-threshold[g])/sqrt(mom/nu*(1-mom/nu)/nu),
-           prob = stats::pbeta(threshold[g], mom, nu-mom, lower.tail = FALSE)
-    ) %>%
-      matrix(nrow=1)
-  })  %>%
-    convert_sample(3, match.fun(combine)) %>%
-    {as.numeric(.data[[1]])} %>%
-    return()
+  out <-
+    lapply(1:groups(dist), function(g){
+      mom <- diag(params(dist, g)$moments)
+      nu <- params(dist, g)$nu
+      switch(target,
+             mean = (mom/nu),
+             tstat = (mom/nu-threshold[g])/sqrt(mom/nu*(1-mom/nu)/nu),
+             prob = stats::pbeta(threshold[g], mom, nu-mom, lower.tail = FALSE)
+      ) %>%
+        matrix(nrow=1)
+    })  %>%
+    convert_sample(3, match.fun(combine))
+  return(as.numeric(out[[1]]))
 }
 
 #' Sample from distribution ignoring the dependency structure

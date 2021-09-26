@@ -38,9 +38,7 @@ ssapply2 <- function(s, fun, args){
            matrix(nrow=1, ncol=ncol(x)))
 }
 
-#' @importFrom rlang .data
 ssapply3 <- function(s, fun, args){
-  array(unlist(s), dim = c(nrow(s[[1]]), ncol(s[[1]]), length(s))) %>%
-    {do.call(apply, c(list(X=.data, MARGIN=1:2, FUN=fun), args))} %>%
-    list()
+  a <- array(unlist(s), dim = c(nrow(s[[1]]), ncol(s[[1]]), length(s)))
+  list(do.call(apply, c(list(X=a, MARGIN=1:2, FUN=fun), args)))
 }

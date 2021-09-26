@@ -1,5 +1,6 @@
 ---
 title: "SIMPle README"
+author: "Max Westphal (mwestphal@uni-bremen.de)"
 output: md_document
 ---
 
