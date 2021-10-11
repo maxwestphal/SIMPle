@@ -65,8 +65,12 @@ infer.SIMPle.sample <- function(x,
                                 ...){
   stopifnot(match.arg(method) %in% c("auto", "sample"))
 
+  args <- as.list(environment())
+  args$sample <- x
+  args$x <- NULL
+
   st <- calc_stats(stats, args$sample, args$dist)
-  cr <- do.call(paste0("infer_", method), args=args)
+  cr <- do.call(infer_sample, args=args)
   out <- merge_results(st, cr)
   class(out) <- append(class(out), "SIMPle.result")
 
@@ -107,13 +111,14 @@ infer_approx <- function(dist,
   return(list(cr))
 }
 
-infer_sample <- function(dist,
+infer_sample <- function(dist = NULL,
                          sample,
                          prob,
                          stats,
                          aggr_var = "all",
                          aggr_group = "&",
                          ...){
+
   pr <- opt_cr(prob=prob, sample=sample, dist=dist, aggr_var=aggr_var, aggr_group=aggr_group)
   cr <- get_cr(pr, sample, dist)
 
@@ -144,7 +149,7 @@ coverage <- function(pr,
 
 #' @importFrom stats uniroot
 opt_cr <- function(prob, sample, dist=NULL, aggr_var="all", aggr_group="&"){
-  stats::uniroot(f=coverage, interval=c(1e-3, 1-1e-3),
+  stats::uniroot(f=coverage, interval=c(1e-5, 1-1e-5),
                  prob=prob, sample=sample, dist=dist,
                  aggr_var=aggr_var, aggr_group=aggr_group)$root
 }

@@ -52,7 +52,6 @@ rank_dist <- function(dist,
 
 rank_dist_sample <- function(dist, target, combine, threshold, size){
   sample <- sample_dist_marginal(dist, n=10000)
-  s <- 1 # TODO: ifelse(prob_type == "greater", 1, -1)
   out <-
     switch(target,
            mean =
@@ -63,7 +62,7 @@ rank_dist_sample <- function(dist, target, combine, threshold, size){
              }),
            prob =
              lapply(1:groups(dist), function(g){
-               (s*(sample[[g]]-threshold[g])) > 0
+               ((sample[[g]]-threshold[g])) > 0
              })
     ) %>%
     convert_sample(3, match.fun(combine)) %>%

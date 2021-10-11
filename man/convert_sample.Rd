@@ -4,7 +4,7 @@
 \alias{convert_sample}
 \title{Apply functions to SIMPle.sample objects}
 \usage{
-convert_sample(sample, margin, fun, args = list())
+convert_sample(sample, margin, fun, args = list(), postproc = NULL)
 }
 \arguments{
 \item{sample}{\code{SIMPle.sample} object, see \code{\link{draw_sample}}}
@@ -15,6 +15,8 @@ convert_sample(sample, margin, fun, args = list())
 \item{fun}{function to be applied}
 
 \item{args}{list of arguments to be passed to \code{fun}}
+
+\item{postproc}{function (or function name) to be applied after the conversion}
 }
 \description{
 Apply functions to SIMPle.sample objects

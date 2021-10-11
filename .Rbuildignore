@@ -2,6 +2,6 @@
 ^renv\.lock$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-dev
 ^\.github$
+dev
 README.Rmd

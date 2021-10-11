@@ -45,7 +45,6 @@ define_dist <- function(nu=1,
   args$input <- c("gamma", "moments", "corr")[index]
   args$vars <- max(c(c(log(length(gamma), 2), nrow(moments), nrow(corr))[index], vars, length(mean)),
                    na.rm = TRUE)
-  print(args$vars)
 
   args$type <- "mbeta"
   args$mode <- get_mode_mbeta(args$vars, match.arg(mode))
