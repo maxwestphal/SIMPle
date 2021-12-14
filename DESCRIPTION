@@ -1,7 +1,7 @@
 Package: SIMPle
 Type: Package
 Title: Simultaneous Inference for Multiple Proportions (SIMPle)
-Version: 0.2.2
+Version: 0.3.0
 Authors@R: 
     person(given = "Max",
            family = "Westphal",
@@ -16,6 +16,7 @@ RoxygenNote: 7.1.1
 Imports: 
     GGally,
     extraDistr,
+    MCMCpack,
     bindata,
     copula,
     limSolve,

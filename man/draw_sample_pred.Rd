@@ -10,25 +10,22 @@ draw_sample_pred(
   size = rep(1, groups(dist)),
   method_pred = c("mbeta_approx", "rmvbin"),
   method_ext = c("basic", "cov"),
-  regu = 1,
   count = TRUE,
   msg = TRUE
 )
 }
 \arguments{
-\item{dist}{\code{SIMPle.dist} object, see \code{\link{define_dist}}}
+\item{dist}{\code{SIMPle.dist} object, representing a multivariate beta distribution see \code{\link{define_dist}}}
 
-\item{sample}{either a precomputed \code{SIMPle.sample} object or an integer specifiying the sample size}
+\item{sample}{either a precomputed \code{SIMPle.sample} object or an integer specifying the sample size}
 
 \item{size}{sample size(s) for predictive count data}
 
-\item{method_pred}{character, for drawing predictive sample, only "rmvbin" available}
+\item{method_pred}{character, for drawing predictive sample, either "mbeta_approx" (recommended) or "rmvbin"}
 
-\item{method_ext}{character, method for sample 'extesnion', only "basic" available}
+\item{method_ext}{character, method for sample 'extension', either "basic" (default) or "cov"}
 
-\item{regu}{integer, regu parameter}
-
-\item{count}{logical, should outcome be counts (TRUE) or probabilities (FALSE)}
+\item{count}{logical, should outcome be counts (TRUE; default) or probabilities (FALSE)}
 
 \item{msg}{logical, should messages be displayed? (default: TRUE)}
 }
@@ -36,5 +33,5 @@ draw_sample_pred(
 Draw a sample from the predictive (mbeta-mbin) distribution
 }
 \details{
-Predictive mbeta-mbin distribution
+Approximation of predictive mbeta-mbin (multivariate beta - multivariate binomial) distribution
 }

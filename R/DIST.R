@@ -75,7 +75,7 @@ sample_mbeta <- function(dist, n=10000,
   return(result)
 }
 
-#' @importFrom  extraDistr rdirichlet
+#' @importFrom  MCMCpack rdirichlet
 #' @importFrom  Matrix nearPD
 #' @importFrom  copula normalCopula
 #' @importFrom  copula P2p
@@ -84,7 +84,7 @@ sample_mbeta <- function(dist, n=10000,
 sample_mbeta1 <- function(dist, g=1, n=10000, method = "reduced", proj.pd = TRUE, msg=TRUE){
   if(msg)message(c("SIMPle: Drawing sample from ", type(dist)[1], " distribution (method: ", method, ")"))
   if(method=="full"){
-    return(dir2mbeta(extraDistr::rdirichlet(n=n, alpha=params(dist, g, simplify=TRUE)$gamma)))
+    return(dir2mbeta(MCMCpack::rdirichlet(n=n, alpha=params(dist, g, simplify=TRUE)$gamma)))
   }
   if(method=="reduced"){
     if(!proj.pd){R <- stats::cov2cor(features(dist, g)$cov)}
