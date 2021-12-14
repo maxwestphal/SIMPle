@@ -5,3 +5,4 @@
 ^\.github$
 dev
 README.Rmd
+^LICENSE\.md$

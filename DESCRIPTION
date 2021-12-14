@@ -9,7 +9,7 @@ Authors@R:
            email = "mwestphal@uni-bremen.de",
            comment = c(ORCID = "0000-0002-8488-758X"))
 Description: This package implements a multivariate beta distribution and allows to construct multivariate credible regions.
-License: GPL-3
+License: LGPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
