@@ -1,6 +1,6 @@
 Package: SIMPle
 Type: Package
-Title: Simultaneous Inference for Multiple Proportions (SIMPle)
+Title: Simultaneous Inference for Multiple Proportions
 Version: 0.3.0
 Authors@R: 
     person(given = "Max",
