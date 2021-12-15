@@ -29,7 +29,7 @@ This **R package** implements a multivariate beta distribution and allows to con
 The package can be downloaded and installed in R by running 
 
 ```{r install, eval=FALSE, echo=TRUE}
-remotes::install_github("https://github.com/maxwestphal/SIMPle")
+remotes::install_github("maxwestphal/SIMPle")
 ```
 
 

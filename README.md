@@ -24,7 +24,7 @@ allows to construct credible regions for multiple proportions.
 
 The package can be downloaded and installed in R by running
 
-    remotes::install_github("https://github.com/maxwestphal/SIMPle")
+    remotes::install_github("maxwestphal/SIMPle")
 
 ------------------------------------------------------------------------
 
